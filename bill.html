@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shan Cuisine — Invoice</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+      /* Print-friendly adjustments */
+      @media print{
+        body{background:#fff;color:#000}
+        .no-print{display:none}
+      }
+      .invoice-box{max-width:900px;margin:2rem auto;padding:1.5rem;border:1px solid #eee;border-radius:8px}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm no-print">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="index.html"><span class="brand-ja">シャン料理</span><small class="ms-2 brand-en">Shan Cuisine</small></a>
+        <div class="ms-auto">
+          <button class="btn btn-outline-light me-2" id="back">Back to Menu</button>
+          <button class="btn btn-primary" id="print">Print</button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container">
+      <div class="invoice-box bg-white shadow-sm p-4">
+        <h2 class="invoice-title">Invoice</h2>
+        <h2 class="hotel-title">Shan Cuisine</h2>
+        <div class="mb-3">
+          <div><strong>Customer:</strong> <span id="inv-customer">-</span></div>
+          <div><strong>Mobile:</strong> <span id="inv-mobile">-</span></div>
+        </div>
+        <div id="invoice-items" class="mb-3"></div>
+        <div class="d-flex justify-content-between"><div>Subtotal</div><div id="inv-subtotal">$0.00</div></div>
+        <div class="d-flex justify-content-between"><div>Tax (10%)</div><div id="inv-tax">$0.00</div></div>
+        <div class="d-flex justify-content-between"><div>Service (5%)</div><div id="inv-service">$0.00</div></div>
+        <hr>
+        <div class="d-flex justify-content-between fw-bold"><div>Grand Total</div><div id="inv-total">$0.00</div></div>
+      </div>
+    </main>
+
+    <script>
+      // Read bill from localStorage (same key used in script.js)
+      const BILL_KEY = 'shan_bill_v1';
+      function loadBill(){
+        try{const raw = localStorage.getItem(BILL_KEY); return raw?JSON.parse(raw):{} }catch(e){return {}}}
+      function getProducts(){
+        try{
+          // attempt to use products from script.js if loaded
+          if (window.products && Array.isArray(window.products)) return window.products;
+        } catch(e){}
+        // fallback minimal lookup: we'll request product names/prices from menu page via localStorage copy
+        return [];
+      }
+
+      function renderInvoice(){
+        const bill = loadBill();
+        const itemsNode = document.getElementById('invoice-items');
+        itemsNode.innerHTML = '';
+        // try to get product list from opener (if window opened from site)
+        const products = window.products || [];
+        let subtotal = 0;
+
+        // read customer meta
+        try{
+          const metaRaw = localStorage.getItem('shan_bill_meta_v1');
+          if (metaRaw) {
+            const meta = JSON.parse(metaRaw);
+            document.getElementById('inv-customer').textContent = meta.name || '-';
+            document.getElementById('inv-mobile').textContent = meta.mobile || '-';
+          }
+        }catch(e){}
+
+        Object.keys(bill).forEach(id => {
+          const qty = bill[id];
+          let product = products.find(p=>p.id == id);
+          // if no product available, attempt to read a cached products map
+          if (!product){
+            // try parsing a cached products JSON if present
+            try{const cached = localStorage.getItem('shan_products_v1'); if (cached) { const map = JSON.parse(cached); product = map[id]; }}catch(e){}
+          }
+          const name = product?product.name:`Item ${id}`;
+          const price = product?product.price:0;
+          const line = price * qty;
+          subtotal += line;
+          const div = document.createElement('div');
+          div.className = 'd-flex justify-content-between mb-2';
+          div.innerHTML = `<div>${name} x ${qty}</div><div>$${line.toFixed(2)}</div>`;
+          itemsNode.appendChild(div);
+        });
+        const tax = subtotal * 0.10;
+        const service = subtotal * 0.05;
+        const grand = subtotal + tax + service;
+        document.getElementById('inv-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+        document.getElementById('inv-tax').textContent = `$${tax.toFixed(2)}`;
+        document.getElementById('inv-service').textContent = `$${service.toFixed(2)}`;
+        document.getElementById('inv-total').textContent = `$${grand.toFixed(2)}`;
+      }
+
+      document.getElementById('print').addEventListener('click', ()=> window.print());
+      document.getElementById('back').addEventListener('click', ()=> window.location.href = 'menu.html');
+      renderInvoice();
+    </script>
+  </body>
+</html>

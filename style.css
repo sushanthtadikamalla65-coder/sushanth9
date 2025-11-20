@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;700&family=Roboto:wght@400;700&display=swap');
+
+:root{
+	--bg:#fff7f2;
+	--primary:#7b241c; /* deep maroon */
+	--accent:#f4d03f; /* saffron/gold */
+	--muted:#5c3a2e;
+	--card:#fff;
+}
+
+body{
+	margin:0;
+	font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', Arial;
+	background: linear-gradient(180deg,var(--bg) 0%, #fff 100%);
+	color:var(--muted);
+}
+
+header{
+	background: linear-gradient(90deg, rgba(123,36,28,0.95) 0%, rgba(123,36,28,0.9) 100%);
+	padding: 1.8rem 1rem 1.2rem 1rem;
+	text-align:center;
+	border-bottom:6px solid var(--accent);
+}
+
+.brand-ja{
+	font-family: 'Merriweather', serif;
+	font-size:2rem;
+	color:var(--accent);
+	letter-spacing:1px;
+}
+.brand-en{
+	margin-top:4px;
+	font-weight:700;
+	font-size:1rem;
+	color:#fff;
+	opacity:0.95;
+}
+
+.container{ max-width:1100px; margin:2rem auto; padding:0 1rem }
+
+.products, .cart{
+	background: var(--card);
+	border-radius:10px;
+	padding:1.25rem;
+	flex:1;
+	box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.products h2, .cart h2{ color:var(--primary); font-weight:700; margin-bottom:1rem; font-family:'Merriweather', serif }
+
+.product{ display:flex; justify-content:space-between; align-items:center; padding:0.6rem 0; border-bottom:1px solid #f1e7e4 }
+.product:last-child{ border-bottom:none }
+.product span{ font-size:1rem }
+.product .price{ color:var(--primary); font-weight:700 }
+
+button{ background:transparent; border:2px solid var(--primary); color:var(--primary); padding:0.45rem 0.9rem; border-radius:6px; cursor:pointer; font-weight:700 }
+button:hover{ background:rgba(123,36,28,0.06) }
+button:disabled{ opacity:0.6; cursor:not-allowed }
+
+.cart-items{ margin-bottom:1rem }
+.cart-item{ display:flex; justify-content:space-between; align-items:center; padding:0.4rem 0 }
+.total{ font-weight:800; color:var(--primary); margin-bottom:1rem }
+
+/* Hero styles: use a warm background */
+.welcome-hero{ background:linear-gradient(90deg, rgba(123,36,28,0.9), rgba(196,91,71,0.85)); padding:4rem 1rem; border-radius:8px }
+.welcome-hero h1, .welcome-hero p{ color:#fff }
+
+/* Menu / bill styles */
+.bill-card { border-radius:10px; }
+.bill-line { border-bottom:1px dashed rgba(0,0,0,0.06); padding-bottom:0.5rem; }
+.bill-breakdown div { font-size:0.95rem; }
+.bill-breakdown hr { border-color: rgba(0,0,0,0.06); }
+.list-group-item .quantity { max-width:100px; }
+
+@media (max-width:768px){ .bill-card { margin-top:1rem } }
+
+/* Full-hero carousel styling */
+.hero-carousel { margin-bottom: 1.5rem; border-radius:12px; overflow:hidden; }
+.hero-carousel .carousel-item img { width:100%; height:520px; object-fit:cover; }
+@media (max-width:880px){ .hero-carousel .carousel-item img { height:320px } }
+
+/* Invoice print behavior: hide on-screen invoice title and show hotel name on print */
+.hotel-title{ display:none; font-family:'Merriweather', serif; color:var(--primary) }
+.invoice-title{ display:block }
+@media print{
+	.invoice-title{ display:none }
+	.hotel-title{ display:block; font-size:24px }
+}
+
