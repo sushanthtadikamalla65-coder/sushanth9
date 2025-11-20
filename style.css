@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Sawarabi+Mincho&display=swap');
+
+:root{
+  --bg:#080808;
+  --accent:#c62828; /* deep red */
+  --muted:#222;
+  --paper:#0f0f0f;
+}
+
+body{
+  margin:0;
+  font-family: 'Noto Sans JP', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: linear-gradient(180deg,var(--bg) 0%, #120505 100%);
+  color:#fff;
+}
+
+header{
+  background: linear-gradient(90deg, #0b0b0b 0%, #080808 100%);
+  padding: 2.2rem 1rem 1.2rem 1rem;
+  text-align:center;
+  border-bottom:4px solid var(--accent);
+}
+
+.brand-ja{
+  font-family: 'Sawarabi Mincho', serif;
+  font-size:2.2rem;
+  color:var(--accent);
+  letter-spacing:2px;
+}
+.brand-en{
+  margin-top:6px;
+  font-weight:700;
+  font-size:1.1rem;
+  color:#fff;
+  opacity:0.9;
+}
+
+.container{
+  max-width:1100px;
+  margin:2rem auto;
+  display:flex;
+  gap:2rem;
+  padding:0 1rem;
+}
+
+.products, .cart{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:12px;
+  padding:1.5rem;
+  flex:1;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  border:1px solid rgba(255,255,255,0.03);
+}
+
+.products h2, .cart h2{
+  color:var(--accent);
+  font-weight:700;
+  margin:0 0 1rem 0;
+  font-family:'Noto Sans JP', sans-serif;
+}
+
+.product{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0.6rem 0;
+  border-bottom:1px dashed rgba(255,255,255,0.03);
+}
+.product:last-child{border-bottom:none}
+
+.product span{font-size:1rem}
+.product .price{color:var(--accent);font-weight:700}
+
+button{
+  background:transparent;
+  border:2px solid var(--accent);
+  color:var(--accent);
+  padding:0.45rem 0.9rem;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:700;
+}
+button:hover{background:rgba(198,40,40,0.08)}
+button:disabled{opacity:0.5;cursor:not-allowed}
+
+.cart-items{margin-bottom:1rem}
+.cart-item{display:flex;justify-content:space-between;align-items:center;padding:0.4rem 0}
+.total{font-weight:800;color:#fff;margin-bottom:1rem}
+
+/* Responsive */
+@media (max-width:880px){
+  .container{flex-direction:column}
+}
+
+/* Hero styles */
+.hero{
+  position:relative;
+  max-width:1100px;
+  margin:1.5rem auto 0 auto;
+  border-radius:12px;
+  overflow:hidden;
+}
+.hero-img{
+  width:100%;
+  height:360px;
+  object-fit:cover;
+  display:block;
+  filter:contrast(0.95) saturate(0.9) brightness(0.95);
+}
+.hero-overlay{
+  position:absolute;
+  left:0;right:0;top:0;bottom:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  padding:2rem;
+  background: linear-gradient(90deg, rgba(8,8,8,0.55) 0%, rgba(0,0,0,0.15) 60%);
+  transform:translateY(6px);
+  opacity:0;
+  transition:opacity 700ms ease, transform 700ms cubic-bezier(.2,.8,.2,1);
+}
+.hero-overlay.show{opacity:1;transform:none}
+.welcome-line{
+  font-family:'Sawarabi Mincho', serif;
+  color:var(--accent);
+  font-size:2.2rem;
+  margin:0 0 0.3rem 0;
+}
+.subline{
+  margin:0 0 0.6rem 0;
+  color:#fff;
+  opacity:0.95;
+}
+.credit{font-size:0.75rem;color:rgba(255,255,255,0.6);margin-top:8px}
+
+@media (max-width:640px){
+  .hero-img{height:220px}
+  .welcome-line{font-size:1.4rem}
+}
