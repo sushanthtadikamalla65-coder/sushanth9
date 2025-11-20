@@ -4,22 +4,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>7 Star Hotel Luxury Menu</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap');
+        body {
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            margin: 0;
+            padding: 0;
+            color: #f3f3f3;
+        }
+        header {
+            background: linear-gradient(90deg, #ffd700 0%, #b8860b 100%);
+            color: #1a1a2e;
+            padding: 2rem 1rem 1rem 1rem;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            border-bottom: 4px solid #fff8dc;
+            box-shadow: 0 4px 16px rgba(186, 134, 11, 0.2);
+        }
+        .container {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1100px;
+            margin: 2rem auto;
+        }
+        .products, .cart {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(255, 215, 0, 0.08);
+            padding: 2rem 1.5rem;
+            flex: 1;
+            backdrop-filter: blur(2px);
+        }
+        .products h2, .cart h2 {
+            font-family: 'Playfair Display', serif;
+            color: #ffd700;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .product {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #ffd70033;
+            padding-bottom: 0.75rem;
+            font-size: 1.15rem;
+        }
+        .product:last-child {
+            border-bottom: none;
+        }
+        button {
+            background: linear-gradient(90deg, #ffd700 0%, #b8860b 100%);
+            color: #1a1a2e;
+            border: none;
+            padding: 0.6rem 1.3rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.15);
+            transition: background 0.2s;
+        }
+        button:hover:not(:disabled) {
+            background: linear-gradient(90deg, #fff8dc 0%, #ffd700 100%);
+        }
+        button:disabled {
+            background: #ccc;
+            color: #888;
+            cursor: not-allowed;
+        }
+        .cart-items {
+            margin-bottom: 1.5rem;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        .total {
+            font-family: 'Playfair Display', serif;
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body>
     <header>
-        7 Star Hotel - Luxury Menu
+        <div class="brand">
+            <div class="brand-ja">シャン料理</div>
+            <div class="brand-en">Shan Cuisine</div>
+        </div>
     </header>
+    <!-- Hero section: image + welcome message. Replace the image URL with your own if desired. -->
+    <section class="hero">
+        <img class="hero-img" src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1400&q=80" alt="Woman holding champagne glass">
+        <div class="hero-overlay">
+            <h2 class="welcome-line">Welcome to Shan Cuisine</h2>
+            <p class="subline">Experience refined Japanese flavors — elegant, intimate, unforgettable.</p>
+            <p class="credit">Photo: Unsplash (replace with your own image)</p>
+        </div>
+    </section>
     <div class="container">
         <div class="products">
-            <h2>Luxury Menu</h2>
+            <h2>Menu — 専門料理</h2>
             <div id="product-list"></div>
         </div>
         <div class="cart">
             <h2>Your Selection</h2>
             <div class="cart-items" id="cart-items"></div>
             <div class="total" id="cart-total">Total: $0.00</div>
-            <button id="checkout-btn">Reserve Table</button>
+            <button id="checkout-btn">Place Order</button>
         </div>
     </div>
     <script src="script.js"></script>
